@@ -1,5 +1,6 @@
 const prompt = require('prompt-sync')();
 
+//main call function for the whole program
 function selector() {
     console.log("Student Grade Manager")
     console.log("")
@@ -25,6 +26,7 @@ function selector() {
     }
 }
 
+//Used at least once in each function to allow user to keep using the program
 function ask(selection) {
     if (selection === "add") {
         let response = prompt("Would you like to add another grade? (yes/no): ").toLowerCase();
@@ -79,11 +81,13 @@ function addGrade() {
     let newGrade = Number(prompt("Enter New Grade: "));
     if (newGrade >= 0 && newGrade <= 100) {
         grades.push(newGrade);
+        //puts a space between each item in the array
         console.log(`Updated Grades: ${grades.join(', ')}`)
     } else {
         console.log("Must be a number between 0-100");
         addGrade();
     }
+    //these lines used in each function to call the ask function
     let again = ask("add");
     if (again === "yes") {
         addGrade();
@@ -106,6 +110,7 @@ function removeGrade() {
                 selector();
             }
         } else {
+            //calls the ask function if the user tries to remove a grade that isn't in the array.
             console.log("Grade does not exist");
             let again = ask("removeTwo");
             if (again === "yes") {
@@ -120,9 +125,11 @@ function removeGrade() {
 function calcAverage() {
     console.log(`Current Grades: ${grades.join(', ')}`);
     let totalSum = 0;
+    //adds all the items in the array together
     for (let i = 0; i < grades.length; i++) {
         totalSum+=grades[i];
     }
+    //find the average using basic formula
     let average = totalSum / grades.length;
     console.log(`Average: ${average}`);
 }
@@ -130,6 +137,7 @@ function calcAverage() {
 function showHighest() {
     let highest = 0;
     for (let i = 0; i < grades.length; i++) {
+        //allows the highest variable to become the highest item in the array.
         if (grades[i] > highest) {
             highest = grades[i];
         }
@@ -147,8 +155,16 @@ function showHighest() {
 function showAllGrades() {
     let formatted = []
     for (let i = 0; i < grades.length; i++) {
+        //formats all grades to: 1. grade1 2. grade2 3. grade3 etc...
         formatted.push(`${i + 1}. ${grades[i]}`);
     }
+    //formats them to tab and go on a new line to show:
+    /*
+        1. grade1
+        2. grade2
+        3. grade3
+        etc...
+    */
     console.log("\t" + formatted.join("\n\t"));
     let again = ask("allGrades");
     if (again === "yes") {
@@ -158,5 +174,6 @@ function showAllGrades() {
     }
 }
 
+//starts the program by creating the grades variable and calling the selector function
 var grades = [ ]
 selector();
